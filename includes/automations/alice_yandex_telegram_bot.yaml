@@ -1,0 +1,28 @@
+#Алиса получает сообщения в телеграмм
+  - alias: Alice_telegram_bot_receive_message
+    id: Alice_telegram_bot_receive_message
+    initial_state: true
+    trigger:
+       platform: event
+       event_type: telegram_text
+    condition:
+      condition: template
+      value_template: '{{ trigger.event.data.text|regex_search("^Алиса, .*") }}' #сообщение начинается на "Алиса, ", без этого Алиса не отреагирует
+    action:
+      service: media_player.play_media
+      entity_id: media_player.yandex_station_m0009w500d6n3k  # заменить на нужную станцию
+      data:
+        media_content_id: "{{ trigger.event.data.text }}"
+        media_content_type: "question:{{ trigger.event.data.chat_id }}"
+
+#Алиса отвечает в телеграмм
+  - alias: Alice_telegram_bot_answer_message
+    id: Alice_telegram_bot_answer_message
+    trigger:
+      platform: event
+      event_type: yandex_station_response
+    action:
+      service: telegram_bot.send_message
+      data:
+        target: "{{ trigger.event.data.request_id }}"
+        message: "{{ trigger.event.data.text }}"

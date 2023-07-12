@@ -1,0 +1,124 @@
+# - alias: Stirka nachalas
+#   id: Stirka nachalas
+#   initial_state: true
+#   trigger:
+#   - platform: event
+#     event_type: state_changed
+#     event_data:
+#       entity_id: sensor.yandex_socket_current
+#   condition:
+#   - condition: numeric_state
+#     entity_id: sensor.yandex_socket_current
+#     above: '100'
+#   - condition: state
+#     entity_id: binary_sensor.stiralka_door_contact
+#     state: 'off'
+#   - condition: state
+#     entity_id: input_boolean.stirka
+#     state: 'off'
+#   - condition: state
+#     entity_id: input_boolean.stirka_zakonchilas
+#     state: 'off'
+#   action:
+#   - service: input_boolean.turn_on
+#     target:
+#       entity_id: input_boolean.stirka
+
+# - alias: Stirka zakonchilas
+#   id: Stirka zakonchilas
+#   initial_state: true
+#   trigger:
+#   - platform: event
+#     event_type: state_changed
+#     event_data:
+#       entity_id: sensor.yandex_socket_current
+#   condition:
+#   - condition: numeric_state
+#     entity_id: sensor.yandex_socket_current
+#     below: '20'
+#   - condition: state
+#     entity_id: binary_sensor.stiralka_door_contact
+#     state: 'off'
+#   - condition: state
+#     entity_id: input_boolean.stirka
+#     state: 'on'
+#   action:
+#   - delay:
+#       minutes: 1
+#   - service: input_boolean.turn_off
+#     target:
+#       entity_id: input_boolean.stirka
+#   - service: input_boolean.turn_on
+#     target:
+#       entity_id: input_boolean.stirka_zakonchilas
+#   - repeat:
+#       until:
+#       - condition: or
+#         conditions:
+#         - condition: state
+#           state: 'off'
+#           entity_id: input_boolean.stirka_zakonchilas
+#         - condition: state
+#           entity_id: binary_sensor.stiralka_door_contact
+#           state: 'on'
+#         - condition: state
+#           entity_id: input_boolean.stirka_perezapusk
+#           state: 'on'
+#       sequence:
+#       - service: notify.telegram
+#         data:
+#           message: 🧺Стирка закончилась, пора просушить белье
+#       - delay:
+#           hours: 0
+#           minutes: 30
+#           seconds: 0
+#           milliseconds: 0
+
+# - alias: Stirka otkluchenie
+#   id: Stirka otkluchenie
+#   initial_state: true
+#   trigger:
+#   - platform: state
+#     entity_id: binary_sensor.stiralka_door_contact
+#     from: 'off'
+#     to: 'on'
+#   condition:
+#   - condition: state
+#     entity_id: input_boolean.stirka_zakonchilas
+#     state: 'on'
+#   action:
+#   - service: input_boolean.turn_off
+#     target:
+#       entity_id:
+#       - input_boolean.stirka
+#       - input_boolean.stirka_perezapusk
+#       - input_boolean.stirka_zakonchilas
+
+# - alias: Stirka perezapusk
+#   id: Stirka perezapusk
+#   initial_state: true
+#   trigger:
+#   - platform: event
+#     event_type: state_changed
+#     event_data:
+#       entity_id: sensor.yandex_socket_current
+#   condition:
+#   - condition: numeric_state
+#     entity_id: sensor.yandex_socket_current
+#     above: '100'
+#   - condition: state
+#     entity_id: input_boolean.stirka_zakonchilas
+#     state: 'on'
+#   - condition: state
+#     entity_id: binary_sensor.stiralka_door_contact
+#     state: 'off'
+#   - condition: state
+#     entity_id: input_boolean.stirka_perezapusk
+#     state: 'off'
+#   action:
+#   - service: input_boolean.turn_on
+#     target:
+#       entity_id:
+#       - input_boolean.stirka_perezapusk
+#       - input_boolean.stirka
+

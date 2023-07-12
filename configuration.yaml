@@ -1,0 +1,80 @@
+
+# Loads default set of integrations. Do not remove.
+default_config:
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+#-------------------------------------------------------------------------------
+# includes
+automation manual: !include_dir_merge_list includes/automations
+automation ui: !include automations.yaml
+
+binary_sensor: !include_dir_merge_list includes/binary_sensors
+
+group: !include includes/groups.yaml
+
+input_boolean: !include includes/input_booleans.yaml
+input_number: !include includes/input_number.yaml
+input_select: !include includes/input_select.yaml
+
+script: !include_dir_merge_named includes/scripts
+script ui: !include scripts.yaml
+
+scene: !include includes/scenes.yaml
+scene ui: !include scenes.yaml
+
+sensor: !include_dir_merge_list includes/sensors
+
+switch: !include_dir_merge_list includes/switches
+
+zone: !include includes/zones.yaml
+
+template: !include_dir_merge_list includes/templates
+ 
+homeassistant:
+  packages: !include_dir_named includes/packages
+#-------------------------------------------------------------------------------
+
+#   Telegram_bot
+telegram_bot:
+  - platform: polling #uncomment this when Telegram got banned in Russia
+#  - platform: webhooks #comment this when Telegram got banned in Russia
+#    url: !secret telegram_bot_webhook_url
+    parse_mode: html
+    api_key: !secret telegram_bot_api_key
+    allowed_chat_ids:
+      - !secret chat_id_dmitry
+      - !secret chat_id_maria
+      - !secret chat_id_my_group
+notify:
+  - name: Dmitry Gornakov
+    platform: telegram
+    chat_id: !secret chat_id_dmitry
+  - name: Maria Gornakova
+    platform: telegram
+    chat_id: !secret chat_id_maria
+  - name: Telegram
+    platform: telegram
+    chat_id: !secret chat_id_my_group  
+
+#-------------------------------------------------------------------------------
+# device_trackers
+device_tracker:
+
+  - platform: google_maps
+    username: !secret google_maps_username
+    max_gps_accuracy: 100
+
+#-------------------------------------------------------------------------------
+#   Включаем поддержку python скриптов
+python_script: 
+#-------------------------------------------------------------------------------
+# system_log
+system_log:
+  fire_event: true 
+
+#-------------------------------------------------------------------------------
+# wake_on_lan 
+wake_on_lan:

@@ -1,0 +1,42 @@
+- id: Zone
+  alias: Отслеживание по зонам
+  initial_state: true
+  mode: queued
+  max_exceeded: silent
+  trigger:
+    - platform: state
+      entity_id:   
+      - person.dmitr
+      - person.mariia
+  condition:
+    - condition: template
+      value_template: "{{ trigger.from_state.state != trigger.to_state.state }}"
+  action:
+    - service: notify.telegram
+      data:
+       message: >- 
+          {%- set from = trigger.from_state.state |replace('_',' ') | title %}
+          {%- set to = trigger.to_state.state |replace('_',' ') | title %}
+          {%- set person = trigger.to_state.attributes.friendly_name %}
+          {%- if from == 'Home' %}
+          {%- set from = 'Дом' %}
+          {%- endif %}
+          {%- if to == 'Home' %}
+          {%- set to = 'Дом' %}            
+          {%- endif %}
+          {%- if from == 'Not Home' %}
+            {%- set event = 'прибыл' %}
+          {%- elif to == 'Not Home' %}
+            {%- set event = 'покинул' %}
+          {%- else %}
+            {%- set event = 'переместился' %}
+          {%- endif %}
+          {%- if from == "Not Home" %}
+          {{'\U0001f30d'}} {{ person + ' ' + event + ' в ' + to }}
+          {%- elif to == "Not Home" %}
+          {{'\U0001f30d'}} {{ person + ' ' + event + ' ' + from }}
+          {%- else %}
+          {{'\U0001f30d'}} {{ person + ' ' + event + ' из ' + from + ' в ' + to }}
+          {%- endif %}
+       data:
+         disable_notification: true

@@ -1,0 +1,17 @@
+.google_maps_location_sharing.cookies.devicetracking_dgornakov_gmail_com
+.storage
+custom_components
+zigbee2mqtt
+.HA_VERSION
+*.db
+*.db-shm
+*.db-wal
+*.log
+*.log.1
+*.log.fault
+secrets.yaml
+known_devices.yaml
+deps
+tts
+.cloud
+blueprints
