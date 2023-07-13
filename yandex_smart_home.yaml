@@ -1,0 +1,49 @@
+  entity_config:
+    sensor.living_room_temperature_sensor_temperature:
+      name: Температура
+      room: Гостиная
+      properties:
+        - type: temperature
+          entity: sensor.living_room_temperature_sensor_temperature
+        - type: humidity
+          entity: sensor.living_room_temperature_sensor_humidity
+    sensor.kids_room_temperature_sensor_temperature:
+      name: Температура
+      room: Детская
+      properties:
+        - type: temperature
+          entity: sensor.kids_room_temperature_sensor_temperature
+        - type: humidity
+          entity: sensor.kids_room_temperature_sensor_humidity
+    sensor.sleeping_room_temperature_sensor_temperature:
+      name: Температура
+      room: Спальня
+      properties:
+        - type: temperature
+          entity: sensor.sleeping_room_temperature_sensor_temperature
+        - type: humidity
+          entity: sensor.sleeping_room_temperature_sensor_humidity
+    climate.kids_room_ac:
+      modes:
+        fan_speed:
+          auto: ['Auto']
+          high: ['High']
+          low: ['Low']
+          medium: ['Medium']
+          quiet: ['Silent']
+          turbo: ['Super high']
+        swing: 
+          vertical: ['Vertical']
+          stationary: ['Off']
+    climate.sleeping_room_ac:
+      modes:
+        fan_speed:
+          auto: ['Auto']
+          high: ['High']
+          low: ['Low']
+          medium: ['Medium']
+          quiet: ['Silent']
+          turbo: ['Super high']
+        swing: 
+          vertical: ['Vertical']
+          stationary: ['Off']
