@@ -1,0 +1,29 @@
+# Кастомизация
+  entity_config:
+# Датчики температуры и влажности, достаем влажность из аттрибутов сенсора
+    sensor.living_room_temperature_sensor_temperature:
+      name: Температура
+      room: Гостиная
+      properties:
+        - type: temperature
+          attribute: temperature
+        - type: humidity
+          attribute: humidity
+
+    sensor.kids_room_temperature_sensor_temperature:
+      name: Температура
+      room: Детская
+      properties:
+        - type: temperature
+          attribute: temperature
+        - type: humidity
+          attribute: humidity
+
+    sensor.sleeping_room_temperature_sensor_temperature:
+      name: Температура
+      room: Спальня
+      properties:
+        - type: temperature
+          attribute: temperature
+        - type: humidity
+          attribute: humidity

@@ -1,0 +1,31 @@
+#Через платформу мобильного приложения Home Assistant для Android, подробнее об использовании https://companion.home-assistant.io/docs/notifications/notification-commands/
+#При вызове скрипта на указанном телефоне с приложением будет запущен таймер на 1 секунду, после чего телефон включит уведомление о том что таймер закончился. Должно работать даже через режим "Не беспокоить" 
+find_dmitry_phone:
+  alias: Найти телефон Димы
+  sequence:
+  - service: notify.mobile_app_dmitrii_android_phone 
+    data:
+      message: "command_activity" 
+      data:
+        channel: "com.sec.android.app.clockpackage"
+        group: "android.intent.extra.alarm.LENGTH:1,android.intent.extra.alarm.MESSAGE:Найди меня,android.intent.extra.alarm.SKIP_UI:true"
+        tag: "android.intent.action.SET_TIMER"
+        ttl: 0
+        priority: high
+  mode: single
+  icon: mdi:account
+# TODO
+# find_maria_phone:
+#   alias: Найти телефон Маши
+#   sequence:
+#   - service: notify.mobile_app_mariia_android_phone
+#     data:
+#       message: "command_activity"
+#       data:
+#         channel: "com.sec.android.app.clockpackage"
+#         group: "android.intent.extra.alarm.LENGTH:1,android.intent.extra.alarm.MESSAGE:Найди меня,android.intent.extra.alarm.SKIP_UI:true"
+#         tag: "android.intent.action.SET_TIMER"
+#         ttl: 0
+#         priority: high
+#   mode: single
+#   icon: mdi:account

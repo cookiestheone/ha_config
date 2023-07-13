@@ -1,0 +1,5 @@
+domashnie:
+  name: Домашние
+  entities:
+    - person.dmitr
+    - person.mariia
