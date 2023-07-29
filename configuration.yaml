@@ -7,6 +7,17 @@ frontend:
   themes: !include_dir_merge_named themes
 
 #-------------------------------------------------------------------------------
+# SSL
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 172.30.33.0/24
+    - 127.0.0.1
+    - ::1
+  ssl_certificate: !secret ssl_certificate 
+  ssl_key: !secret ssl_key
+
+#-------------------------------------------------------------------------------
 # includes
 automation manual: !include_dir_merge_list includes/automations
 automation ui: !include automations.yaml
@@ -39,8 +50,8 @@ homeassistant:
 
 #   Telegram_bot
 telegram_bot:
-  - platform: polling #uncomment this when Telegram got banned in Russia
-#  - platform: webhooks #comment this when Telegram got banned in Russia
+#  - platform: polling #uncomment this when Telegram got banned in Russia
+  - platform: webhooks #comment this when Telegram got banned in Russia
 #    url: !secret telegram_bot_webhook_url
     parse_mode: html
     api_key: !secret telegram_bot_api_key
