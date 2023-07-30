@@ -14,18 +14,18 @@ find_dmitry_phone:
         priority: high
   mode: single
   icon: mdi:account
-# TODO
-# find_maria_phone:
-#   alias: Найти телефон Маши
-#   sequence:
-#   - service: notify.mobile_app_mariia_android_phone
-#     data:
-#       message: "command_activity"
-#       data:
-#         channel: "com.sec.android.app.clockpackage"
-#         group: "android.intent.extra.alarm.LENGTH:1,android.intent.extra.alarm.MESSAGE:Найди меня,android.intent.extra.alarm.SKIP_UI:true"
-#         tag: "android.intent.action.SET_TIMER"
-#         ttl: 0
-#         priority: high
-#   mode: single
-#   icon: mdi:account
+
+find_mariia_phone:
+  alias: Найти телефон Маши
+  sequence:
+  - service: notify.mobile_app_mariia_android_phone
+    data:
+      message: "command_activity"
+      data:
+        channel: "com.sec.android.app.clockpackage"
+        group: "android.intent.extra.alarm.LENGTH:1,android.intent.extra.alarm.MESSAGE:Найди меня,android.intent.extra.alarm.SKIP_UI:true"
+        tag: "android.intent.action.SET_TIMER"
+        ttl: 0
+        priority: high
+  mode: single
+  icon: mdi:account
