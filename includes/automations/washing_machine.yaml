@@ -1,4 +1,4 @@
- - alias: Washing machine start
+- alias: Washing machine start
   id: Washing machine start
   initial_state: true
   trigger:
